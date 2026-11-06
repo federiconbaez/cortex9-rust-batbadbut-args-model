@@ -1,0 +1,3 @@
+version,total,error,findings_in_model,ends_in_quotes,only_unknown_in_model,no_findings_in_model
+1.77.1,37777,0,11565,7150,0,26212
+1.77.2,37777,0,0,0,8016,29761

@@ -1,0 +1,37 @@
+id,version,ok,cmdline_json,error_kind,model_status,finding_kinds,real_cmd_behaviour
+01_plain,1.77.1,True,"""cmd.exe /d /c \""\""test.bat\"" hello\""""",,no_findings_in_model,,UNKNOWN
+01_plain,1.77.2,True,"""cmd.exe /e:ON /v:OFF /d /c \""\""test.bat\"" hello\""""",,no_findings_in_model,,UNKNOWN
+02_space,1.77.1,True,"""cmd.exe /d /c \""\""test.bat\"" \""hello world\""\""""",,no_findings_in_model,,UNKNOWN
+02_space,1.77.2,True,"""cmd.exe /e:ON /v:OFF /d /c \""\""test.bat\"" \""hello world\""\""""",,no_findings_in_model,,UNKNOWN
+03_quote_amp,1.77.1,True,"""cmd.exe /d /c \""\""test.bat\"" \""\\\""&echo X\""\""""",,findings_in_model,metachar_outside_quotes,UNKNOWN
+03_quote_amp,1.77.2,True,"""cmd.exe /e:ON /v:OFF /d /c \""\""test.bat\"" \""\""\""&echo X\""\""""",,no_findings_in_model,,UNKNOWN
+04_percent_var,1.77.1,True,"""cmd.exe /d /c \""\""test.bat\"" \""%PATH%\""\""""",,findings_in_model,percent_expansion_possible,UNKNOWN
+04_percent_var,1.77.2,True,"""cmd.exe /e:ON /v:OFF /d /c \""\""test.bat\"" \""%%cd:~,%PATH%%cd:~,%\""\""""",,only_unknown_in_model,percent_hack_UNKNOWN,UNKNOWN
+05_trailing_backslash,1.77.1,True,"""cmd.exe /d /c \""\""test.bat\"" a\\\""""",,no_findings_in_model,,UNKNOWN
+05_trailing_backslash,1.77.2,True,"""cmd.exe /e:ON /v:OFF /d /c \""\""test.bat\"" \""a\\\\\""\""""",,no_findings_in_model,,UNKNOWN
+06_backslash_quote,1.77.1,True,"""cmd.exe /d /c \""\""test.bat\"" a\\\\\\\""b\""""",,no_findings_in_model,,UNKNOWN
+06_backslash_quote,1.77.2,True,"""cmd.exe /e:ON /v:OFF /d /c \""\""test.bat\"" \""a\\\\\""\""b\""\""""",,no_findings_in_model,,UNKNOWN
+07_cr,1.77.1,True,"""cmd.exe /d /c \""\""test.bat\"" a\rb\""""",,findings_in_model,line_break,UNKNOWN
+07_cr,1.77.2,False,"""""",crlf,,,UNKNOWN
+08_lf,1.77.1,True,"""cmd.exe /d /c \""\""test.bat\"" a\nb\""""",,findings_in_model,line_break,UNKNOWN
+08_lf,1.77.2,False,"""""",crlf,,,UNKNOWN
+09_nul,1.77.1,False,"""""",nul,,,UNKNOWN
+09_nul,1.77.2,False,"""""",nul,,,UNKNOWN
+10_empty,1.77.1,True,"""cmd.exe /d /c \""\""test.bat\"" \""\""\""""",,no_findings_in_model,,UNKNOWN
+10_empty,1.77.2,True,"""cmd.exe /e:ON /v:OFF /d /c \""\""test.bat\"" \""\""\""""",,no_findings_in_model,,UNKNOWN
+11_non_ascii,1.77.1,True,"""cmd.exe /d /c \""\""test.bat\"" h\u00e9llo\""""",,no_findings_in_model,,UNKNOWN
+11_non_ascii,1.77.2,True,"""cmd.exe /e:ON /v:OFF /d /c \""\""test.bat\"" h\u00e9llo\""""",,no_findings_in_model,,UNKNOWN
+12_c1_control,1.77.1,True,"""cmd.exe /d /c \""\""test.bat\"" \u0085\""""",,no_findings_in_model,,UNKNOWN
+12_c1_control,1.77.2,True,"""cmd.exe /e:ON /v:OFF /d /c \""\""test.bat\"" \""\u0085\""\""""",,no_findings_in_model,,UNKNOWN
+13_caret,1.77.1,True,"""cmd.exe /d /c \""\""test.bat\"" \""a^b\""\""""",,no_findings_in_model,,UNKNOWN
+13_caret,1.77.2,True,"""cmd.exe /e:ON /v:OFF /d /c \""\""test.bat\"" \""a^b\""\""""",,no_findings_in_model,,UNKNOWN
+14_force_quotes,1.77.1,True,"""cmd.exe /d /c \""\""test.bat\"" \""hello\""\""""",,no_findings_in_model,,UNKNOWN
+14_force_quotes,1.77.2,True,"""cmd.exe /e:ON /v:OFF /d /c \""\""test.bat\"" \""hello\""\""""",,no_findings_in_model,,UNKNOWN
+15_raw_arg,1.77.1,True,"""cmd.exe /d /c \""\""test.bat\"" &echo X\""""",,findings_in_model,metachar_outside_quotes,UNKNOWN
+15_raw_arg,1.77.2,True,"""cmd.exe /e:ON /v:OFF /d /c \""\""test.bat\"" &echo X\""""",,findings_in_model,metachar_outside_quotes,UNKNOWN
+16_script_with_quote,1.77.1,False,"""""",script_name,,,UNKNOWN
+16_script_with_quote,1.77.2,False,"""""",script_name,,,UNKNOWN
+17_script_trailing_backslash,1.77.1,False,"""""",script_name,,,UNKNOWN
+17_script_trailing_backslash,1.77.2,False,"""""",script_name,,,UNKNOWN
+18_bang,1.77.1,True,"""cmd.exe /d /c \""\""test.bat\"" \""a!b\""\""""",,no_findings_in_model,,UNKNOWN
+18_bang,1.77.2,True,"""cmd.exe /e:ON /v:OFF /d /c \""\""test.bat\"" \""a!b\""\""""",,no_findings_in_model,,UNKNOWN

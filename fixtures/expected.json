@@ -1,0 +1,75 @@
+{
+ "_note": "Hand-derived from args.rs at 1.77.1 and 1.77.2; [1.77.1, 1.77.2]; ERR:<kind> means InvalidInput.",
+ "01_plain": [
+  "cmd.exe /d /c \"\"test.bat\" hello\"",
+  "cmd.exe /e:ON /v:OFF /d /c \"\"test.bat\" hello\""
+ ],
+ "02_space": [
+  "cmd.exe /d /c \"\"test.bat\" \"hello world\"\"",
+  "cmd.exe /e:ON /v:OFF /d /c \"\"test.bat\" \"hello world\"\""
+ ],
+ "03_quote_amp": [
+  "cmd.exe /d /c \"\"test.bat\" \"\\\"&echo X\"\"",
+  "cmd.exe /e:ON /v:OFF /d /c \"\"test.bat\" \"\"\"&echo X\"\""
+ ],
+ "04_percent_var": [
+  "cmd.exe /d /c \"\"test.bat\" \"%PATH%\"\"",
+  "cmd.exe /e:ON /v:OFF /d /c \"\"test.bat\" \"%%cd:~,%PATH%%cd:~,%\"\""
+ ],
+ "05_trailing_backslash": [
+  "cmd.exe /d /c \"\"test.bat\" a\\\"",
+  "cmd.exe /e:ON /v:OFF /d /c \"\"test.bat\" \"a\\\\\"\""
+ ],
+ "06_backslash_quote": [
+  "cmd.exe /d /c \"\"test.bat\" a\\\\\\\"b\"",
+  "cmd.exe /e:ON /v:OFF /d /c \"\"test.bat\" \"a\\\\\"\"b\"\""
+ ],
+ "07_cr": [
+  "cmd.exe /d /c \"\"test.bat\" a\rb\"",
+  "ERR:crlf"
+ ],
+ "08_lf": [
+  "cmd.exe /d /c \"\"test.bat\" a\nb\"",
+  "ERR:crlf"
+ ],
+ "09_nul": [
+  "ERR:nul",
+  "ERR:nul"
+ ],
+ "10_empty": [
+  "cmd.exe /d /c \"\"test.bat\" \"\"\"",
+  "cmd.exe /e:ON /v:OFF /d /c \"\"test.bat\" \"\"\""
+ ],
+ "11_non_ascii": [
+  "cmd.exe /d /c \"\"test.bat\" h\u00e9llo\"",
+  "cmd.exe /e:ON /v:OFF /d /c \"\"test.bat\" h\u00e9llo\""
+ ],
+ "12_c1_control": [
+  "cmd.exe /d /c \"\"test.bat\" \u0085\"",
+  "cmd.exe /e:ON /v:OFF /d /c \"\"test.bat\" \"\u0085\"\""
+ ],
+ "13_caret": [
+  "cmd.exe /d /c \"\"test.bat\" \"a^b\"\"",
+  "cmd.exe /e:ON /v:OFF /d /c \"\"test.bat\" \"a^b\"\""
+ ],
+ "14_force_quotes": [
+  "cmd.exe /d /c \"\"test.bat\" \"hello\"\"",
+  "cmd.exe /e:ON /v:OFF /d /c \"\"test.bat\" \"hello\"\""
+ ],
+ "15_raw_arg": [
+  "cmd.exe /d /c \"\"test.bat\" &echo X\"",
+  "cmd.exe /e:ON /v:OFF /d /c \"\"test.bat\" &echo X\""
+ ],
+ "16_script_with_quote": [
+  "ERR:script_name",
+  "ERR:script_name"
+ ],
+ "17_script_trailing_backslash": [
+  "ERR:script_name",
+  "ERR:script_name"
+ ],
+ "18_bang": [
+  "cmd.exe /d /c \"\"test.bat\" \"a!b\"\"",
+  "cmd.exe /e:ON /v:OFF /d /c \"\"test.bat\" \"a!b\"\""
+ ]
+}

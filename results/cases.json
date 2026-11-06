@@ -1,0 +1,466 @@
+{
+ "01_plain": {
+  "1.77.1": {
+   "check": {
+    "after_strip": "\"test.bat\" hello",
+    "ends_in_quotes": false,
+    "findings": [],
+    "model_status": "no_findings_in_model",
+    "real_cmd_behaviour": "UNKNOWN",
+    "stripped_outer_quotes": true
+   },
+   "cmdline": "cmd.exe /d /c \"\"test.bat\" hello\"",
+   "ok": true
+  },
+  "1.77.2": {
+   "check": {
+    "after_strip": "\"test.bat\" hello",
+    "ends_in_quotes": false,
+    "findings": [],
+    "model_status": "no_findings_in_model",
+    "real_cmd_behaviour": "UNKNOWN",
+    "stripped_outer_quotes": true
+   },
+   "cmdline": "cmd.exe /e:ON /v:OFF /d /c \"\"test.bat\" hello\"",
+   "ok": true
+  }
+ },
+ "02_space": {
+  "1.77.1": {
+   "check": {
+    "after_strip": "\"test.bat\" \"hello world\"",
+    "ends_in_quotes": false,
+    "findings": [],
+    "model_status": "no_findings_in_model",
+    "real_cmd_behaviour": "UNKNOWN",
+    "stripped_outer_quotes": true
+   },
+   "cmdline": "cmd.exe /d /c \"\"test.bat\" \"hello world\"\"",
+   "ok": true
+  },
+  "1.77.2": {
+   "check": {
+    "after_strip": "\"test.bat\" \"hello world\"",
+    "ends_in_quotes": false,
+    "findings": [],
+    "model_status": "no_findings_in_model",
+    "real_cmd_behaviour": "UNKNOWN",
+    "stripped_outer_quotes": true
+   },
+   "cmdline": "cmd.exe /e:ON /v:OFF /d /c \"\"test.bat\" \"hello world\"\"",
+   "ok": true
+  }
+ },
+ "03_quote_amp": {
+  "1.77.1": {
+   "check": {
+    "after_strip": "\"test.bat\" \"\\\"&echo X\"",
+    "ends_in_quotes": true,
+    "findings": [
+     {
+      "char": "&",
+      "kind": "metachar_outside_quotes",
+      "pos": 14
+     }
+    ],
+    "model_status": "findings_in_model",
+    "real_cmd_behaviour": "UNKNOWN",
+    "stripped_outer_quotes": true
+   },
+   "cmdline": "cmd.exe /d /c \"\"test.bat\" \"\\\"&echo X\"\"",
+   "ok": true
+  },
+  "1.77.2": {
+   "check": {
+    "after_strip": "\"test.bat\" \"\"\"&echo X\"",
+    "ends_in_quotes": false,
+    "findings": [],
+    "model_status": "no_findings_in_model",
+    "real_cmd_behaviour": "UNKNOWN",
+    "stripped_outer_quotes": true
+   },
+   "cmdline": "cmd.exe /e:ON /v:OFF /d /c \"\"test.bat\" \"\"\"&echo X\"\"",
+   "ok": true
+  }
+ },
+ "04_percent_var": {
+  "1.77.1": {
+   "check": {
+    "after_strip": "\"test.bat\" \"%PATH%\"",
+    "ends_in_quotes": false,
+    "findings": [
+     {
+      "char": "%",
+      "kind": "percent_expansion_possible",
+      "pos": 12
+     },
+     {
+      "char": "%",
+      "kind": "percent_expansion_possible",
+      "pos": 17
+     }
+    ],
+    "model_status": "findings_in_model",
+    "real_cmd_behaviour": "UNKNOWN",
+    "stripped_outer_quotes": true
+   },
+   "cmdline": "cmd.exe /d /c \"\"test.bat\" \"%PATH%\"\"",
+   "ok": true
+  },
+  "1.77.2": {
+   "check": {
+    "after_strip": "\"test.bat\" \"%%cd:~,%PATH%%cd:~,%\"",
+    "ends_in_quotes": false,
+    "findings": [
+     {
+      "char": "%",
+      "kind": "percent_hack_UNKNOWN",
+      "pos": 19
+     },
+     {
+      "char": "%",
+      "kind": "percent_hack_UNKNOWN",
+      "pos": 31
+     }
+    ],
+    "model_status": "only_unknown_in_model",
+    "real_cmd_behaviour": "UNKNOWN",
+    "stripped_outer_quotes": true
+   },
+   "cmdline": "cmd.exe /e:ON /v:OFF /d /c \"\"test.bat\" \"%%cd:~,%PATH%%cd:~,%\"\"",
+   "ok": true
+  }
+ },
+ "05_trailing_backslash": {
+  "1.77.1": {
+   "check": {
+    "after_strip": "\"test.bat\" a\\",
+    "ends_in_quotes": false,
+    "findings": [],
+    "model_status": "no_findings_in_model",
+    "real_cmd_behaviour": "UNKNOWN",
+    "stripped_outer_quotes": true
+   },
+   "cmdline": "cmd.exe /d /c \"\"test.bat\" a\\\"",
+   "ok": true
+  },
+  "1.77.2": {
+   "check": {
+    "after_strip": "\"test.bat\" \"a\\\\\"",
+    "ends_in_quotes": false,
+    "findings": [],
+    "model_status": "no_findings_in_model",
+    "real_cmd_behaviour": "UNKNOWN",
+    "stripped_outer_quotes": true
+   },
+   "cmdline": "cmd.exe /e:ON /v:OFF /d /c \"\"test.bat\" \"a\\\\\"\"",
+   "ok": true
+  }
+ },
+ "06_backslash_quote": {
+  "1.77.1": {
+   "check": {
+    "after_strip": "\"test.bat\" a\\\\\\\"b",
+    "ends_in_quotes": true,
+    "findings": [],
+    "model_status": "no_findings_in_model",
+    "real_cmd_behaviour": "UNKNOWN",
+    "stripped_outer_quotes": true
+   },
+   "cmdline": "cmd.exe /d /c \"\"test.bat\" a\\\\\\\"b\"",
+   "ok": true
+  },
+  "1.77.2": {
+   "check": {
+    "after_strip": "\"test.bat\" \"a\\\\\"\"b\"",
+    "ends_in_quotes": false,
+    "findings": [],
+    "model_status": "no_findings_in_model",
+    "real_cmd_behaviour": "UNKNOWN",
+    "stripped_outer_quotes": true
+   },
+   "cmdline": "cmd.exe /e:ON /v:OFF /d /c \"\"test.bat\" \"a\\\\\"\"b\"\"",
+   "ok": true
+  }
+ },
+ "07_cr": {
+  "1.77.1": {
+   "check": {
+    "after_strip": "\"test.bat\" a\rb",
+    "ends_in_quotes": false,
+    "findings": [
+     {
+      "char": "'\\r'",
+      "kind": "line_break",
+      "pos": 12
+     }
+    ],
+    "model_status": "findings_in_model",
+    "real_cmd_behaviour": "UNKNOWN",
+    "stripped_outer_quotes": true
+   },
+   "cmdline": "cmd.exe /d /c \"\"test.bat\" a\rb\"",
+   "ok": true
+  },
+  "1.77.2": {
+   "error": "batch file arguments are invalid",
+   "error_kind": "crlf",
+   "ok": false
+  }
+ },
+ "08_lf": {
+  "1.77.1": {
+   "check": {
+    "after_strip": "\"test.bat\" a\nb",
+    "ends_in_quotes": false,
+    "findings": [
+     {
+      "char": "'\\n'",
+      "kind": "line_break",
+      "pos": 12
+     }
+    ],
+    "model_status": "findings_in_model",
+    "real_cmd_behaviour": "UNKNOWN",
+    "stripped_outer_quotes": true
+   },
+   "cmdline": "cmd.exe /d /c \"\"test.bat\" a\nb\"",
+   "ok": true
+  },
+  "1.77.2": {
+   "error": "batch file arguments are invalid",
+   "error_kind": "crlf",
+   "ok": false
+  }
+ },
+ "09_nul": {
+  "1.77.1": {
+   "error": "nul byte found in provided data",
+   "error_kind": "nul",
+   "ok": false
+  },
+  "1.77.2": {
+   "error": "nul byte found in provided data",
+   "error_kind": "nul",
+   "ok": false
+  }
+ },
+ "10_empty": {
+  "1.77.1": {
+   "check": {
+    "after_strip": "\"test.bat\" \"\"",
+    "ends_in_quotes": false,
+    "findings": [],
+    "model_status": "no_findings_in_model",
+    "real_cmd_behaviour": "UNKNOWN",
+    "stripped_outer_quotes": true
+   },
+   "cmdline": "cmd.exe /d /c \"\"test.bat\" \"\"\"",
+   "ok": true
+  },
+  "1.77.2": {
+   "check": {
+    "after_strip": "\"test.bat\" \"\"",
+    "ends_in_quotes": false,
+    "findings": [],
+    "model_status": "no_findings_in_model",
+    "real_cmd_behaviour": "UNKNOWN",
+    "stripped_outer_quotes": true
+   },
+   "cmdline": "cmd.exe /e:ON /v:OFF /d /c \"\"test.bat\" \"\"\"",
+   "ok": true
+  }
+ },
+ "11_non_ascii": {
+  "1.77.1": {
+   "check": {
+    "after_strip": "\"test.bat\" h\u00e9llo",
+    "ends_in_quotes": false,
+    "findings": [],
+    "model_status": "no_findings_in_model",
+    "real_cmd_behaviour": "UNKNOWN",
+    "stripped_outer_quotes": true
+   },
+   "cmdline": "cmd.exe /d /c \"\"test.bat\" h\u00e9llo\"",
+   "ok": true
+  },
+  "1.77.2": {
+   "check": {
+    "after_strip": "\"test.bat\" h\u00e9llo",
+    "ends_in_quotes": false,
+    "findings": [],
+    "model_status": "no_findings_in_model",
+    "real_cmd_behaviour": "UNKNOWN",
+    "stripped_outer_quotes": true
+   },
+   "cmdline": "cmd.exe /e:ON /v:OFF /d /c \"\"test.bat\" h\u00e9llo\"",
+   "ok": true
+  }
+ },
+ "12_c1_control": {
+  "1.77.1": {
+   "check": {
+    "after_strip": "\"test.bat\" \u0085",
+    "ends_in_quotes": false,
+    "findings": [],
+    "model_status": "no_findings_in_model",
+    "real_cmd_behaviour": "UNKNOWN",
+    "stripped_outer_quotes": true
+   },
+   "cmdline": "cmd.exe /d /c \"\"test.bat\" \u0085\"",
+   "ok": true
+  },
+  "1.77.2": {
+   "check": {
+    "after_strip": "\"test.bat\" \"\u0085\"",
+    "ends_in_quotes": false,
+    "findings": [],
+    "model_status": "no_findings_in_model",
+    "real_cmd_behaviour": "UNKNOWN",
+    "stripped_outer_quotes": true
+   },
+   "cmdline": "cmd.exe /e:ON /v:OFF /d /c \"\"test.bat\" \"\u0085\"\"",
+   "ok": true
+  }
+ },
+ "13_caret": {
+  "1.77.1": {
+   "check": {
+    "after_strip": "\"test.bat\" \"a^b\"",
+    "ends_in_quotes": false,
+    "findings": [],
+    "model_status": "no_findings_in_model",
+    "real_cmd_behaviour": "UNKNOWN",
+    "stripped_outer_quotes": true
+   },
+   "cmdline": "cmd.exe /d /c \"\"test.bat\" \"a^b\"\"",
+   "ok": true
+  },
+  "1.77.2": {
+   "check": {
+    "after_strip": "\"test.bat\" \"a^b\"",
+    "ends_in_quotes": false,
+    "findings": [],
+    "model_status": "no_findings_in_model",
+    "real_cmd_behaviour": "UNKNOWN",
+    "stripped_outer_quotes": true
+   },
+   "cmdline": "cmd.exe /e:ON /v:OFF /d /c \"\"test.bat\" \"a^b\"\"",
+   "ok": true
+  }
+ },
+ "14_force_quotes": {
+  "1.77.1": {
+   "check": {
+    "after_strip": "\"test.bat\" \"hello\"",
+    "ends_in_quotes": false,
+    "findings": [],
+    "model_status": "no_findings_in_model",
+    "real_cmd_behaviour": "UNKNOWN",
+    "stripped_outer_quotes": true
+   },
+   "cmdline": "cmd.exe /d /c \"\"test.bat\" \"hello\"\"",
+   "ok": true
+  },
+  "1.77.2": {
+   "check": {
+    "after_strip": "\"test.bat\" \"hello\"",
+    "ends_in_quotes": false,
+    "findings": [],
+    "model_status": "no_findings_in_model",
+    "real_cmd_behaviour": "UNKNOWN",
+    "stripped_outer_quotes": true
+   },
+   "cmdline": "cmd.exe /e:ON /v:OFF /d /c \"\"test.bat\" \"hello\"\"",
+   "ok": true
+  }
+ },
+ "15_raw_arg": {
+  "1.77.1": {
+   "check": {
+    "after_strip": "\"test.bat\" &echo X",
+    "ends_in_quotes": false,
+    "findings": [
+     {
+      "char": "&",
+      "kind": "metachar_outside_quotes",
+      "pos": 11
+     }
+    ],
+    "model_status": "findings_in_model",
+    "real_cmd_behaviour": "UNKNOWN",
+    "stripped_outer_quotes": true
+   },
+   "cmdline": "cmd.exe /d /c \"\"test.bat\" &echo X\"",
+   "ok": true
+  },
+  "1.77.2": {
+   "check": {
+    "after_strip": "\"test.bat\" &echo X",
+    "ends_in_quotes": false,
+    "findings": [
+     {
+      "char": "&",
+      "kind": "metachar_outside_quotes",
+      "pos": 11
+     }
+    ],
+    "model_status": "findings_in_model",
+    "real_cmd_behaviour": "UNKNOWN",
+    "stripped_outer_quotes": true
+   },
+   "cmdline": "cmd.exe /e:ON /v:OFF /d /c \"\"test.bat\" &echo X\"",
+   "ok": true
+  }
+ },
+ "16_script_with_quote": {
+  "1.77.1": {
+   "error": "Windows file names may not contain `\"` or end with `\\`",
+   "error_kind": "script_name",
+   "ok": false
+  },
+  "1.77.2": {
+   "error": "Windows file names may not contain `\"` or end with `\\`",
+   "error_kind": "script_name",
+   "ok": false
+  }
+ },
+ "17_script_trailing_backslash": {
+  "1.77.1": {
+   "error": "Windows file names may not contain `\"` or end with `\\`",
+   "error_kind": "script_name",
+   "ok": false
+  },
+  "1.77.2": {
+   "error": "Windows file names may not contain `\"` or end with `\\`",
+   "error_kind": "script_name",
+   "ok": false
+  }
+ },
+ "18_bang": {
+  "1.77.1": {
+   "check": {
+    "after_strip": "\"test.bat\" \"a!b\"",
+    "ends_in_quotes": false,
+    "findings": [],
+    "model_status": "no_findings_in_model",
+    "real_cmd_behaviour": "UNKNOWN",
+    "stripped_outer_quotes": true
+   },
+   "cmdline": "cmd.exe /d /c \"\"test.bat\" \"a!b\"\"",
+   "ok": true
+  },
+  "1.77.2": {
+   "check": {
+    "after_strip": "\"test.bat\" \"a!b\"",
+    "ends_in_quotes": false,
+    "findings": [],
+    "model_status": "no_findings_in_model",
+    "real_cmd_behaviour": "UNKNOWN",
+    "stripped_outer_quotes": true
+   },
+   "cmdline": "cmd.exe /e:ON /v:OFF /d /c \"\"test.bat\" \"a!b\"\"",
+   "ok": true
+  }
+ }
+}

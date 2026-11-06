@@ -1,0 +1,18 @@
+{"id": "01_plain", "script": "test.bat", "args": [{"value": "hello", "raw": false}], "force_quotes": false, "note": "Alphanumeric argument: unquoted in both."}
+{"id": "02_space", "script": "test.bat", "args": [{"value": "hello world", "raw": false}], "force_quotes": false, "note": "Space forces quotes in both."}
+{"id": "03_quote_amp", "script": "test.bat", "args": [{"value": "\"&echo X", "raw": false}], "force_quotes": false, "note": "Quote followed by '&': 1.77.1 escapes the quote with a backslash (MSVCRT style), 1.77.2 doubles it."}
+{"id": "04_percent_var", "script": "test.bat", "args": [{"value": "%PATH%", "raw": false}], "force_quotes": false, "note": "Percent: 1.77.1 only quotes; 1.77.2 inserts the %%cd:~,% hack."}
+{"id": "05_trailing_backslash", "script": "test.bat", "args": [{"value": "a\\", "raw": false}], "force_quotes": false, "note": "Trailing backslash: 1.77.2 forces quotes and doubles it before the closing quote."}
+{"id": "06_backslash_quote", "script": "test.bat", "args": [{"value": "a\\\"b", "raw": false}], "force_quotes": false, "note": "Backslash before quote: 2n+1 backslashes (1.77.1) vs n backslashes + doubled quote (1.77.2)."}
+{"id": "07_cr", "script": "test.bat", "args": [{"value": "a\rb", "raw": false}], "force_quotes": false, "note": "CR: 1.77.2 returns InvalidInput."}
+{"id": "08_lf", "script": "test.bat", "args": [{"value": "a\nb", "raw": false}], "force_quotes": false, "note": "LF: 1.77.2 returns InvalidInput."}
+{"id": "09_nul", "script": "test.bat", "args": [{"value": "a\u0000b", "raw": false}], "force_quotes": false, "note": "NUL: both return InvalidInput."}
+{"id": "10_empty", "script": "test.bat", "args": [{"value": "", "raw": false}], "force_quotes": false, "note": "Empty argument is quoted in both."}
+{"id": "11_non_ascii", "script": "test.bat", "args": [{"value": "h\u00e9llo", "raw": false}], "force_quotes": false, "note": "Non-ASCII letter: unquoted in both."}
+{"id": "12_c1_control", "script": "test.bat", "args": [{"value": "\u0085", "raw": false}], "force_quotes": false, "note": "U+0085 (Cc): 1.77.2 quotes Unicode control characters."}
+{"id": "13_caret", "script": "test.bat", "args": [{"value": "a^b", "raw": false}], "force_quotes": false, "note": "Caret: quoted in both."}
+{"id": "14_force_quotes", "script": "test.bat", "args": [{"value": "hello", "raw": false}], "force_quotes": true, "note": "force_quotes=true quotes even plain arguments."}
+{"id": "15_raw_arg", "script": "test.bat", "args": [{"value": "&echo X", "raw": true}], "force_quotes": false, "note": "raw_arg is passed as-is in both; std does not protect it."}
+{"id": "16_script_with_quote", "script": "bad\"name.bat", "args": [{"value": "x", "raw": false}], "force_quotes": false, "note": "Script name containing a quote is rejected in both."}
+{"id": "17_script_trailing_backslash", "script": "dir\\", "args": [{"value": "x", "raw": false}], "force_quotes": false, "note": "Script name ending in backslash is rejected in both."}
+{"id": "18_bang", "script": "test.bat", "args": [{"value": "a!b", "raw": false}], "force_quotes": false, "note": "Exclamation mark: quoted in both (1.77.2 also passes /v:OFF)."}
